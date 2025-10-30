@@ -8,8 +8,12 @@ export default async function Home() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`
   );
-  const { events } = await response.json();
-  console.log(events);
+  if (!response.ok) {
+    console.error("Failed to fetch events:", await response.text());
+    throw new Error("Failed to fetch events");
+  }
+  const data = await response.json();
+  const events = data.events || [];
 
   return (
     <div>

@@ -4,7 +4,6 @@ import { IEvent } from "@/database";
 import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import React from "react";
 
 const EventDetailItem = ({
   icon,
@@ -50,24 +49,30 @@ const EventDetailsPage = async ({
   const { slug } = await params;
 
   const request = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`,
+    { cache: "no-store" }
   );
+  const data = await request.json();
+
+  if (!data.event) {
+    console.error("❌ Invalid event data:", data);
+    return notFound();
+  }
+
   const {
-    event: {
-      _id,
-      description,
-      image,
-      overview,
-      date,
-      time,
-      location,
-      agenda,
-      audience,
-      tags,
-      organizer,
-      mode,
-    },
-  }: { event: IEvent } = await request.json();
+    _id,
+    description,
+    image,
+    overview,
+    date,
+    time,
+    location,
+    agenda,
+    audience,
+    tags,
+    organizer,
+    mode,
+  } = data.event;
 
   if (!description) return notFound();
   const bookings = 10;
