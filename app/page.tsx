@@ -1,9 +1,16 @@
 import EventCard from "@/components/ui/EventCard";
 import ExploreBtn from "@/components/ui/ExploreBtn";
-import { events } from "@/lib/constants";
+import { IEvent } from "@/database";
+
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`
+  );
+  const { events } = await response.json();
+  console.log(events);
+
   return (
     <div>
       <h1 className="text-center capitalize">
@@ -20,7 +27,7 @@ export default function Home() {
         <ul className="events">
           {events &&
             events.length > 0 &&
-            events.map((event) => (
+            events.map((event: IEvent) => (
               <li key={event.title} className="list-none">
                 <EventCard {...event} />
               </li>

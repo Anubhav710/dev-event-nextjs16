@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import LightRays from "@/components/ui/LightRays";
+import Navbar from "@/components/sections/Navbar";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -42,7 +43,10 @@ export default function RootLayout({
             className="custom-rays"
           />
         </div>
-        <main>{children}</main>
+        <main>
+          <Navbar />
+          {children}
+        </main>
       </body>
     </html>
   );
