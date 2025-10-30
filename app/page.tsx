@@ -5,9 +5,8 @@ import { IEvent } from "@/database";
 import Image from "next/image";
 
 export default async function Home() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/events`);
   if (!response.ok) {
     console.error("Failed to fetch events:", await response.text());
     throw new Error("Failed to fetch events");

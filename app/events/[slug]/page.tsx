@@ -47,15 +47,14 @@ const EventDetailsPage = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-
-  const request = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`,
-    { cache: "no-store" }
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const request = await fetch(`${baseUrl}/api/events/${slug}`, {
+    cache: "no-store",
+  });
   const data = await request.json();
 
   if (!data.event) {
-    console.error("❌ Invalid event data:", data);
+    console.error("Invalid event data:", data);
     return notFound();
   }
 
