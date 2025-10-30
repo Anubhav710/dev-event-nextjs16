@@ -1,18 +1,16 @@
 import EventCard from "@/components/ui/EventCard";
 import ExploreBtn from "@/components/ui/ExploreBtn";
 import { IEvent } from "@/database";
+import { events } from "@/lib/constants";
 
 import Image from "next/image";
 
 export default async function Home() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/events`);
-  if (!response.ok) {
-    console.error("Failed to fetch events:", await response.text());
-    throw new Error("Failed to fetch events");
-  }
-  const data = await response.json();
-  const events = data.events || [];
+  // const response = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`
+  // );
+  // const { events } = await response.json();
+  // console.log(events);
 
   return (
     <div>
@@ -30,7 +28,7 @@ export default async function Home() {
         <ul className="events">
           {events &&
             events.length > 0 &&
-            events.map((event: IEvent) => (
+            events.map((event) => (
               <li key={event.title} className="list-none">
                 <EventCard {...event} />
               </li>
