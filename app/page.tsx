@@ -6,7 +6,8 @@ import Image from "next/image";
 
 export default async function Home() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
+    { cache: "no-store" }
   );
   const { events } = await response.json();
   console.log(events);
